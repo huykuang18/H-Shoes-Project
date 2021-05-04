@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Catalog;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ class WishListController extends Controller
 {
 	public function __construct()
 	{
-		$brands = Catalog::Where('brand', 1)->get();
+		$brands = Brand::get();
 		view()->share('brands', $brands);
 	}
 	/* -- wish --*/

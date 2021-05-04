@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Catalog;
 use App\Models\Customer;
 use App\Models\Order;
@@ -9,7 +10,7 @@ use App\Models\OrderDetail;
 use App\Models\Payment;
 use App\Models\Procata;
 use App\Models\Product;
-use App\Models\ProductSize;
+use App\Models\ProductDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +18,7 @@ class PageController extends Controller
 {
 	public function __construct()
 	{
-		$brands = Catalog::Where('brand', 1)->get();
+		$brands = Brand::get();
 		view()->share('brands', $brands);
 	}
 
@@ -31,44 +32,58 @@ class PageController extends Controller
 	public function search(Request $request, $type = null, $id = null)
 	{
 		if ($type == 'catalog') {
-			$catalog = Procata::Where('catalog_id', $id)->get('product_id');
-			$products = Product::WhereIn('id', $catalog)->paginate(6);
+			$products = Product::Where('catalog_id', $id)->paginate(6);
+			$title = Catalog::where('id',$id)->first()->name;
+		} elseif ($type == 'brand') {
+			$products = Product::Where('brand_id', $id)->paginate(6);
+			$title = Brand::where('id',$id)->first()->name;
 		} elseif ($type == 'keyword') {
 			$products = Product::where('name', 'like', '%' . $request->keyword . '%')->paginate(9);
+			$title = 'keyword';
 		} elseif ($type == 'price') {
 			if ($id == '1000000') {
 				$products = Product::Where('price', '>=', $id)->orderBy('price', 'desc')->paginate(9);
+				$title = 'Sản phẩm trên 1 triệu';
 			} elseif ($id == '500000') {
 				$products = Product::Where([['price', '>=', $id], ['price', '<', 1000000]])->orderBy('price', 'desc')->paginate(9);
+				$title = 'Sản phẩm từ 500 nghìn- 1 triệu';
 			} else {
 				$products = Product::Where([['price', '>=', $id], ['price', '<', 500000]])->orderBy('price', 'desc')->paginate(9);
+				$title = 'Sản phẩm dưới 500 nghìn';
 			}
 		} elseif ($type == 'sale') {
 			$products = Product::Where('discount', '!=', 0)->paginate(6);
+			$title = 'Đang giảm giá';
 		} elseif ($type == 'topsale') {
 			$products = Product::Where('discount', '!=', 0)->orderBy('discount', 'desc')->paginate(6);
+			$title = 'Giảm giá nhiều';
 		} elseif ($type == 'top') {
 			$products = Product::orderBy('buyed', 'desc')->Limit(18)->paginate(6);
+			$title = 'Mua nhiều';
 		} elseif ($type == 'newest') {
 			$products = Product::orderBy('created_at', 'desc')->paginate(6);
+			$title = 'Sản phẩm mới';
 		} elseif ($type == 'desc') {
 			$products = Product::orderBy('price', 'desc')->paginate(6);
+			$title = 'Giá giảm dần';
 		} elseif ($type == 'asc') {
 			$products = Product::orderBy('price', 'asc')->paginate(6);
+			$title = 'Giá tăng dần';
 		} else {
 			$products = Product::paginate(9);
+			$title = 'Sản phẩm';
 		}
-		return view('page.shop', compact('products'));
+		return view('page.shop', compact('products','title'));
 	}
 
 	public function productDetail($id)
 	{
 		$product = Product::Where('id', $id)->first();
 		$image_list = json_decode($product->image_list);
-		$sizes = ProductSize::Where([['product_id', $id], ['quantity', '>', 0]])->get();
-		$catalog = Procata::Where('product_id', $id)->get('catalog_id');
-		$pro_ids = Procata::WhereIn('catalog_id', $catalog)->get('product_id');
-		$products = Product::WhereIn('id', $pro_ids)->get();
+		$sizes = ProductDetail::Where([['product_id', $id], ['quantity', '>', 0]])->get();
+		$catalog = Product::Where('id', $id)->get('catalog_id');
+		$brand = Product::Where('id', $id)->get('brand_id');
+		$products = Product::WhereIn('catalog_id', $catalog)->orWhereIn('catalog_id', $catalog)->get();
 		$contents = explode(";",$product->content);
 		return view('page.product-detail', compact('product', 'image_list', 'sizes', 'products','contents'));
 	}
@@ -120,10 +135,10 @@ class PageController extends Controller
 			else :
 				$price = $product->price*(100-$product->discount)*0.01;
 			endif;
-			$pro_size = ProductSize::where([['product_id',$product_id],['size',$size]])->first();
+			$pro_size = ProductDetail::where([['product_id',$product_id],['size',$size]])->first();
 			$qty = $pro_size->quantity;
 			$qtynew = $qty - $quantity;
-			$buyed = $product->buyed + 1;
+			$buyed = $product->buyed + $quantity;
 			OrderDetail::insert([
 				'order_id' => $order_id,
 				'product_id' => $product_id,
@@ -131,7 +146,7 @@ class PageController extends Controller
 				'quantity' => $quantity,
 				'price' => $price
 			]);
-			ProductSize::where([['product_id',$product_id],['size',$size]])->update(['quantity' => $qtynew]);
+			ProductDetail::where([['product_id',$product_id],['size',$size]])->update(['quantity' => $qtynew]);
 			Product::where('id',$product_id)->update(['buyed'=>$buyed]);
 		endforeach;
 		session()->forget("cart");
@@ -173,7 +188,7 @@ class PageController extends Controller
 		$orderDetailts = OrderDetail::Where('order_id',$id)->get();
 		foreach ($orderDetailts as $odt):
 			$product = Product::Where('id',$odt->product_id)->first();
-			ProductSize::Where([['product_id',$odt->product_id],['size',$odt->size]])->update(['quantity'=>$product->quantity + $odt->quantity]);
+			ProductDetail::Where([['product_id',$odt->product_id],['size',$odt->size]])->update(['quantity'=>$product->quantity + $odt->quantity]);
 		endforeach;
 		OrderDetail::Where('order_id',$id)->delete();
 		Order::Where('id',$id)->delete();

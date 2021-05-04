@@ -1,17 +1,3 @@
-    <!-- Top bar Start -->
-    <div class="top-bar">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-6">
-                    <i class="fa fa-envelope"></i> huynq.rma@gmail.com
-                </div>
-                <div class="col-sm-6">
-                    <i class="fa fa-phone-alt"></i> +84 394 366 374
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Top bar End -->
 
     <!-- Nav Bar Start -->
     <div class="nav">
@@ -26,14 +12,14 @@
                         <a href="/" class="nav-item nav-link active">Trang chủ</a>
                         <a href="{{asset('shop')}}" class="nav-item nav-link">Cửa hàng</a>
                         <a href="{{asset('contact')}}" class="nav-item nav-link">Liên hệ</a>
-                        <div class="nav-item dropdown">
+                        <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Thương hiệu</a>
                             <div class="dropdown-menu">
                                 @foreach($brands as $brand)
                                 <a href="{{asset('shop/catalog/'.$brand->id)}}" class="dropdown-item">{{$brand->name}}</a>
                                 @endforeach
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="navbar-nav ml-auto">
                         <a href="{{asset('checkorder')}}" class="nav-item nav-link">Kiểm tra đơn hàng</a>
