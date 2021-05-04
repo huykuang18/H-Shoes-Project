@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Catalog;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ class CartController extends Controller
 {
 	public function __construct()
 	{
-		$brands = Catalog::Where('brand', 1)->get();
+		$brands = Brand::get();
 		view()->share('brands', $brands);
 	}
 	/* -- Cart --*/
@@ -27,7 +28,7 @@ class CartController extends Controller
 				break;
 
 			case 'add':	
-				if (session("cart.$id")&& session("cart.$id.size") == $request->size) {					
+				if (session("cart.$id.number") && session("cart.$id.size") == $request->size) {					
 					session(["cart.$id.number" => session("cart.$id.number") + $request->number]);
 				} else {
 					session([

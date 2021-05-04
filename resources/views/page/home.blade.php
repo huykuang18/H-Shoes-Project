@@ -15,22 +15,19 @@
                 <nav class="navbar bg-light">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="/"><i class="fa fa-home"></i>Trang chủ</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="{{asset('shop/top')}}"><i class="fa fa-shopping-bag"></i>Bán chạy</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{asset('shop/sale')}}"><i class="fa fa-bolt"></i>Đang giảm giá</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{asset('shop/catalog/4')}}"><i class="fa fa-female"></i>Giày nữ</a>
+                            <a class="nav-link" href="{{asset('shop/catalog/1')}}"><i class="fa fa-female"></i>Giày nữ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{asset('shop/catalog/5')}}"><i class="fa fa-male"></i>Giày nam</a>
+                            <a class="nav-link" href="{{asset('shop/catalog/2')}}"><i class="fa fa-male"></i>Giày nam</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{asset('shop/catalog/6')}}"><i class="fa fa-child"></i>Giày trẻ em</a>
+                            <a class="nav-link" href="{{asset('shop/catalog/3')}}"><i class="fa fa-child"></i>Giày trẻ em</a>
                         </li>
                     </ul>
                 </nav>
@@ -191,7 +188,7 @@
                     <div class="product-title">
                         <a href="{{asset('product/'.$sale->id)}}">{{$sale->name}}</a>
                         @if($sale->discount!=0)
-                        <div class="sale"><img src="source/img/sale.png" alt=""></div>
+                        <div class="sale"><img src="{{asset('source/img/sale.png')}}" alt=""></div>
                         @else
                         @endif
                         <div class="ratting">

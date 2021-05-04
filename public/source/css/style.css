@@ -1155,6 +1155,7 @@ h2 {
 .product-detail .product-content .title,
 .product-detail .product-content .ratting,
 .product-detail .product-content .price,
+.product-detail .product-content .type,
 .product-detail .product-content .details,
 .product-detail .product-content .quantity,
 .product-detail .product-content .action {
@@ -1187,15 +1188,19 @@ h2 {
 }
 
 .product-detail .product-content .price,
+.product-detail .product-content .type,
 .product-detail .product-content .quantity,
 .product-detail .product-content .p-size,
+.product-detail .product-content .buyed,
 .product-detail .product-content .p-color {
     margin-bottom: 15px;
 }
 
 .product-detail .product-content .price h4,
+.product-detail .product-content .type h4,
 .product-detail .product-content .quantity h4,
 .product-detail .product-content .p-size h4,
+.product-detail .product-content .buyed h4,
 .product-detail .product-content .p-color h4 {
     display: inline-block;
     width: 80px;
@@ -1223,10 +1228,38 @@ h2 {
     margin: 0;
 }
 
+.product-detail .product-content .buyed p {
+    display: inline-block;
+    color: #FF6F61;
+    font-size: 16px;
+    margin: 0;
+}
+
 .product-detail .product-content .price span {
     color: #999999;
     text-decoration: line-through;
     margin-left: 12px;
+}
+
+.product-detail .product-content .type .tag {
+    display: inline-block;
+}
+
+.product-detail .product-content .type .tag a {
+    margin: 0 0 4px 0;
+    padding: 3px 8px;
+    font-size: 14px;
+    color: #353535;
+    background: #ffffff;
+    border: 1px solid #353535;
+    border-radius: 4px;
+    transition: .3s;
+}
+
+.product-detail .product-content .type .tag a:hover {
+    color: #ffffff;
+    background: #FF6F61;
+    border-color: #FF6F61;
 }
 
 .product-detail .product-content .quantity .qty {
@@ -1587,14 +1620,14 @@ h2 {
 
 .cart-page .table .qty {
     display: inline-block;
-    width: 100px;
     font-size: 0;
 }
 
 .cart-page .table button {
     width: 30px;
     height: 30px;
-    font-size: 14px;
+    padding: 2px 0;
+    font-size: 16px;
     text-align: center;
     color: #ffffff;
     background: #FF6F61;

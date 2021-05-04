@@ -11,13 +11,13 @@
                     <a class="nav-link" href="{{asset('shop/sale')}}"><i class="fa fa-bolt"></i>Đang giảm giá</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{asset('shop/catalog/4')}}"><i class="fa fa-female"></i>Giày nữ</a>
+                    <a class="nav-link" href="{{asset('shop/catalog/2')}}"><i class="fa fa-female"></i>Giày nữ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{asset('shop/catalog/5')}}"><i class="fa fa-male"></i>Giày nam</a>
+                    <a class="nav-link" href="{{asset('shop/catalog/1')}}"><i class="fa fa-male"></i>Giày nam</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{asset('shop/catalog/6')}}"><i class="fa fa-child"></i>Giày trẻ em</a>
+                    <a class="nav-link" href="{{asset('shop/catalog/3')}}"><i class="fa fa-child"></i>Giày trẻ em</a>
                 </li>
             </ul>
         </nav>

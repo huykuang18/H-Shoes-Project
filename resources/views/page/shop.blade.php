@@ -8,6 +8,7 @@
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
             <li class="breadcrumb-item active">Cửa hàng</li>
+            <li class="breadcrumb-item">{{$title}}</li>
         </ul>
     </div>
 </div>
@@ -34,10 +35,16 @@
                         <div class="product-view-top">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <form method="get" action="{{url('shop/keyword/key')}}" class="product-search">
-                                        <input type="text" name="keyword" placeholder="Tìm kiếm">
-                                        <button><i class="fa fa-search"></i></button>
-                                    </form>
+                                    <div class="product-short">
+                                        <div class="dropdown">
+                                            <div class="dropdown-toggle" data-toggle="dropdown">Thương hiệu</div>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                @foreach($brands as $brand)
+                                                <a href="{{asset('shop/brand/'.$brand->id)}}" class="dropdown-item">{{$brand->name}}</a>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="product-short">
@@ -46,8 +53,8 @@
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <a href="{{asset('shop/newest')}}" class="dropdown-item">Mới nhất</a>
                                                 <a href="{{asset('shop/topsale')}}" class="dropdown-item">Giảm giá nhiều</a>
-                                                <a href="{{asset('shop/desc')}}" class="dropdown-item">Giá tăng dần</a>
-                                                <a href="{{asset('shop/asc')}}" class="dropdown-item">Giá giảm dần</a>
+                                                <a href="{{asset('shop/desc')}}" class="dropdown-item">Giá giảm dần</a>
+                                                <a href="{{asset('shop/asc')}}" class="dropdown-item">Giá tăng dần</a>
                                             </div>
                                         </div>
                                     </div>
