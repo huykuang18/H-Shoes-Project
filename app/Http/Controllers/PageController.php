@@ -11,6 +11,7 @@ use App\Models\Payment;
 use App\Models\Procata;
 use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Models\Rate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -85,7 +86,8 @@ class PageController extends Controller
 		$brand = Product::Where('id', $id)->get('brand_id');
 		$products = Product::WhereIn('catalog_id', $catalog)->orWhereIn('catalog_id', $catalog)->get();
 		$contents = explode(";",$product->content);
-		return view('page.product-detail', compact('product', 'image_list', 'sizes', 'products','contents'));
+		$rates = Rate::Where('product_id',$id)->get();
+		return view('page.product-detail', compact('product', 'image_list', 'sizes', 'products','contents','rates'));
 	}
 
 	/*-- Checkout --*/
@@ -196,4 +198,27 @@ class PageController extends Controller
 	}
 
 	/*-- end Checkout --*/
+
+	/*-- ratting--*/
+	public function rate(Request $request, $id)
+	{
+		$star = $request->star;
+		$name = $request->name;
+		$phone = $request->phone;
+		$comment = $request->comment;
+		Rate::insert([
+			'product_id' => $id,
+			'name' => $name,
+			'phone' => $phone,
+			'star' => $star,
+			'note' => $comment
+		]);
+
+		$avg = Rate::where('product_id',$id)->avg('star');
+		Product::where('id',$id)->update([
+			'star'=>$avg
+		]);
+
+		return redirect()->back();
+	}
 }

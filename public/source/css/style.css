@@ -776,14 +776,23 @@ h2 {
 
 .product-item .product-title .sale {
     float: right;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+}
+
+.product-item .product-title .sale p {
+    position: absolute;
+    float: right;
+    color: #000000;
+    font-size: 12px;
+    font-weight: 1000;
+    transform: translate(13px, -35px);
 }
 
 .product-item .product-title .sale img {
-    float: right;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
 }
 
 .product-item:hover .product-content .price span {

@@ -116,17 +116,21 @@
             <div class="col-lg-3">
                 <div class="product-item">
                     <div class="product-title">
-                        <a href="{{asset('product/'.$top->id)}}">{{$top->name}}</a>
                         @if($top->discount!=0)
-                        <div class="sale"><img src="source/img/sale.png" alt=""></div>
+                        <div class="sale">
+                            <img src="{{asset('source/img/sale1.png')}}" alt="">
+                            <p>-{{$top->discount}}%</p>
+                        </div>
                         @else
                         @endif
+                        <a href="{{asset('product/'.$top->id)}}">{{$top->name}}</a>
                         <div class="ratting">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
+                            @if($top->star!=0)
+                            @for ($i = 0; $i < 5; ++$i) <i class="fa fa-star{{ $top->star <= $i ? '-o' : ''}}{{$top->star == $i + .5 ? '-half' : ''}}" aria-hidden="true"></i>
+                                @endfor
+                                @else
+                                &nbsp;
+                                @endif
                         </div>
                     </div>
                     <div class="product-image">
@@ -188,15 +192,19 @@
                     <div class="product-title">
                         <a href="{{asset('product/'.$sale->id)}}">{{$sale->name}}</a>
                         @if($sale->discount!=0)
-                        <div class="sale"><img src="{{asset('source/img/sale.png')}}" alt=""></div>
+                        <div class="sale">
+                            <img src="{{asset('source/img/sale1.png')}}" alt="">
+                            <p>-{{$sale->discount}}%</p>
+                        </div>
                         @else
                         @endif
                         <div class="ratting">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
+                            @if($sale->star!=0)
+                            @for ($i = 0; $i < 5; ++$i) <i class="fa fa-star{{ $sale->star <= $i ? '-o' : ''}}{{$sale->star == $i + .5 ? '-half' : ''}}" aria-hidden="true"></i>
+                                @endfor
+                                @else
+                                &nbsp;
+                                @endif
                         </div>
                     </div>
                     <div class="product-image">

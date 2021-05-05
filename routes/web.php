@@ -30,3 +30,5 @@ Route::post('checkout','App\Http\Controllers\PageController@order');
 Route::get('checkorder/{type?}','App\Http\Controllers\PageController@getSearch');
 Route::get('checkorder/detail/{id}','App\Http\Controllers\PageController@orderDetail');
 Route::get('checkorder/delete/{id}','App\Http\Controllers\PageController@deleteOrder');
+
+Route::post('rate/{id}','App\Http\Controllers\PageController@rate');

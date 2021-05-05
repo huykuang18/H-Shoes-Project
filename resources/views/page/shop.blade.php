@@ -82,15 +82,19 @@
                             <div class="product-title">
                                 <a href="{{asset('product/'.$product->id)}}">{{$product->name}}</a>
                                 @if($product->discount!=0)
-                                <div class="sale"><img src="{{asset('source/img/sale.png')}}" alt=""></div>
+                                <div class="sale">
+                                    <img src="{{asset('source/img/sale1.png')}}" alt="">
+                                    <p>-{{$product->discount}}%</p>
+                                </div>
                                 @else
                                 @endif
                                 <div class="ratting">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
+                                    @if($product->star!=0)
+                                    @for ($i = 0; $i < 5; ++$i) <i class="fa fa-star{{ $product->star <= $i ? '-o' : ''}}{{$product->star == $i + .5 ? '-half' : ''}}" aria-hidden="true"></i>
+                                        @endfor
+                                        @else
+                                        &nbsp;
+                                        @endif
                                 </div>
                             </div>
                             <div class="product-image">
