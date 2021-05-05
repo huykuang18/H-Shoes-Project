@@ -20,6 +20,7 @@
 
     <!-- Template Stylesheet -->
     <link rel="stylesheet" href="{{asset('source/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('source/css/star-rating.css')}}">
 </head>
 
 <body>
@@ -64,6 +65,8 @@
 
     <!-- Template Javascript -->
     <script src="{{asset('source/js/main.js')}}"></script>
+    <script src="{{asset('source/js/star-rating.js')}}"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </body>
 
 </html>

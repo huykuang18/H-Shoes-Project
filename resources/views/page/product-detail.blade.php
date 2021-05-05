@@ -44,11 +44,13 @@
                                         <h2>{{$product->name}}</h2>
                                     </div>
                                     <div class="ratting">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
+                                    @if($product->star!=0)
+                                        @for ($i = 0; $i < 5; ++$i)
+                                            <i class="fa fa-star{{ $product->star <= $i ? '-o' : ''}}{{$product->star == $i + .5 ? '-half' : ''}}" aria-hidden="true"></i>
+                                        @endfor
+                                    @else
+                                        <p>Chưa có đánh giá</p>
+                                    @endif
                                     </div>
                                     <div class="price">
                                         <h4>Đơn giá:</h4>
@@ -122,41 +124,39 @@
                             </div>
                             <div id="reviews" class="container tab-pane fade">
                                 <div class="reviews-submitted">
-                                    <div class="reviewer">Phasellus Gravida - <span>01 Jan 2020</span></div>
+                                    @foreach($rates as $rate)
+                                    <div class="reviewer">{{$rate->name}}&nbsp;<span>{{$rate->created_at}}</span></div>
                                     <div class="ratting">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
+                                        @for ($i = 0; $i < 5; ++$i)
+                                            <i class="fa fa-star{{ $rate->star <= $i ? '-o' : ''}}{{$rate->star == $i + .5 ? '-half' : ''}}" aria-hidden="true"></i>
+                                        @endfor
                                     </div>
                                     <p>
-                                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
+                                        {{$rate->note}}
                                     </p>
+                                    @endforeach
                                 </div>
                                 <div class="reviews-submit">
-                                    <h4>Give your Review:</h4>
-                                    <div class="ratting">
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </div>
-                                    <div class="row form">
-                                        <div class="col-sm-6">
-                                            <input type="text" placeholder="Name">
+                                    <h4>Gửi đánh giá của bạn:</h4>
+                                    <form method="post" action="{{url('rate/'.$product->id)}}">
+                                        @csrf
+                                        <input id="input-21b" name="star" type="text" class="rating" data-min=0 data-max=5 data-step=0.5 data-size="md" required title="">
+                                        <div class="clearfix"></div>
+                                        <div class="row form">
+                                            <div class="col-sm-6">
+                                                <input type="text" name="name" placeholder="Họ tên" required>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="number" name="phone" placeholder="Số điện thoại" required>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <textarea name="comment" placeholder="Bình luận"></textarea>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <button type="submit">Gửi</button>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <input type="email" placeholder="Email">
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <textarea placeholder="Review"></textarea>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <button>Submit</button>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -180,11 +180,13 @@
                                     @else
                                     @endif
                                     <div class="ratting">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
+                                    @if($relate->star!=0)
+                                        @for ($i = 0; $i < 5; ++$i)
+                                            <i class="fa fa-star{{ $relate->star <= $i ? '-o' : ''}}{{$relate->star == $i + .5 ? '-half' : ''}}" aria-hidden="true"></i>
+                                        @endfor
+                                    @else
+                                    &nbsp;
+                                    @endif
                                     </div>
                                 </div>
                                 <div class="product-image">
