@@ -28,14 +28,21 @@ class CartController extends Controller
 				break;
 
 			case 'add':	
-				if (session("cart.$id.number") && session("cart.$id.size") == $request->size) {					
+				if (session("cart.$id.number") && session("cart.$id.size") == $request->size) {	
 					session(["cart.$id.number" => session("cart.$id.number") + $request->number]);
-				} else {
+				} elseif (session("cart.$id.number") && session("cart.$id.size") != $request->size) {
+					$newid = session_create_id("cart-$id");
+					session_id($newid);
 					session([
 						"cart.$id.number" => $request->number,
 						"cart.$id.size" => $request->size
 					]);
-				}				
+				} else {	
+					session([
+						"cart.$id.number" => $request->number,
+						"cart.$id.size" => $request->size
+					]);
+				}		
 				return redirect('cart');
 				break;
 

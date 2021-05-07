@@ -36,23 +36,18 @@
                                     </form>
                                 </div>
                             </div>
+                            @if(session('alert'))
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-danger">{{session('alert')}}</div>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-2"></div>
                 </div>
-                @if(session('alert'))
-                            <section class="alert alert-danger">{{session('alert')}}</section>
-                            @endif
                 @if($orders==null)
-                <!-- <div class="col-md-12">
-                    <div class="product-view-top">
-                        <div class="row">
-                            <div>
-                                <p>Không có sản phẩm nào</p>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
                 @else
                 <div class="wishlist-page">
                     <div class="container-fluid">

@@ -13,22 +13,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/','App\Http\Controllers\PageController@getIndex');
+Route::group(['namespace' => 'App\Http\Controllers',], function () {
+    Route::get('/', 'PageController@getIndex');
 
-Route::get('shop/{type?}/{id?}','App\Http\Controllers\PageController@search');
-Route::get('product/{id}','App\Http\Controllers\PageController@productDetail');
+    Route::get('contact', 'PageController@contact');
+    Route::post('message/send','PageController@addFeedback');
 
-Route::get('cart/{action?}/{id?}','App\Http\Controllers\CartController@cart');
-Route::post('cart/{action?}/{id?}','App\Http\Controllers\CartController@cart');
+    Route::get('shop/{type?}/{id?}', 'PageController@search');
+    Route::get('product/{id}', 'PageController@productDetail');
 
-Route::get('wish/{action?}/{id?}','App\Http\Controllers\WishListController@wish');
-Route::post('wish/{action?}/{id?}','App\Http\Controllers\WishListController@wish');
+    Route::get('cart/{action?}/{id?}', 'CartController@cart');
+    Route::post('cart/{action?}/{id?}', 'CartController@cart');
 
-Route::get('checkout','App\Http\Controllers\PageController@checkout');
-Route::post('checkout','App\Http\Controllers\PageController@order');
+    Route::get('wish/{action?}/{id?}', 'WishListController@wish');
+    Route::post('wish/{action?}/{id?}', 'WishListController@wish');
 
-Route::get('checkorder/{type?}','App\Http\Controllers\PageController@getSearch');
-Route::get('checkorder/detail/{id}','App\Http\Controllers\PageController@orderDetail');
-Route::get('checkorder/delete/{id}','App\Http\Controllers\PageController@deleteOrder');
+    Route::get('checkout', 'PageController@checkout');
+    Route::post('checkout', 'PageController@order');
 
-Route::post('rate/{id}','App\Http\Controllers\PageController@rate');
+    Route::get('checkorder/{type?}', 'PageController@getSearch');
+    Route::get('checkorder/detail/{id}', 'PageController@orderDetail');
+    Route::get('checkorder/delete/{id}', 'PageController@deleteOrder');
+
+    Route::post('rate/{id}', 'PageController@rate');
+});
+
+Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers',],function(){
+    
+});

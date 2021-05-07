@@ -12,8 +12,10 @@ use App\Models\Procata;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\Rate;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class PageController extends Controller
 {
@@ -29,6 +31,26 @@ class PageController extends Controller
 		$sales = Product::Where('discount', '!=', 0)->orderBy('discount', 'desc')->paginate(6);
 		return view('page.home', compact('tops', 'sales'));
 	}
+
+	public function contact()
+	{
+		return view('page.contact');
+	}
+
+	public function addFeedback(Request $request)
+    {
+        Mail::send('mailfb',
+		['name'=>$request->name,
+		'email'=>$request->mail, 
+		'content'=>$request->comment]
+		, function($message){
+			$message->from(env('MAIL_USERNAME'),'Feedback'); 
+			$message->to(env('MAIL_USERNAME'), 'Visitor')->subject('Visitor Feedback!');
+	    });
+
+        $alert='Đã gửi phản hồi thành công!';
+		return redirect('/contact')->with('alert',$alert);
+    }
 
 	public function search(Request $request, $type = null, $id = null)
 	{
@@ -161,12 +183,12 @@ class PageController extends Controller
 		{
 			$phone = $request->phone;
 			$customer = Customer::where('phone',$phone)->first();
-			$orders = Order::where('customer_id',$customer->id)->get();
-			if ($orders==null)
+			if ($customer==null)
 			{
-				$alert='Số điện thoại này chưa mua hàng';
-				return redirect()->back()->with('alert',$alert);
+				$alert='Số điện thoại này không có đơn hàng nào';
+				return redirect('/checkorder')->with('alert',$alert);
 			} else {
+				$orders = Order::where('customer_id',$customer->id)->get();
 				return view('page.follow-order',compact('orders','customer'));
 			}
 		}
