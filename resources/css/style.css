@@ -2257,12 +2257,17 @@ h2 {
 }
 
 .contact .contact-info h2 {
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 
 .contact .contact-info h3 {
     margin-bottom: 15px;
     font-size: 18px;
+}
+
+.contact .contact-info h4 {
+    margin-bottom: 30px;
+    font-size: 12px;
 }
 
 .contact .contact-info h3 i {
