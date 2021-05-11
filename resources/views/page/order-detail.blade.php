@@ -1,4 +1,4 @@
-@extends('master')
+@extends('page.layout.master')
 <link rel="stylesheet" href="{{asset('source/css/search.scss')}}">
 @section('title','Kiểm tra đơn hàng')
 @section('content')

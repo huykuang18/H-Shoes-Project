@@ -494,6 +494,11 @@ h2 {
     position: relative;
 }
 
+.header-slider .header-slider-item img {
+    width: 100%;
+    height: 100%;
+}
+
 .header-slider .header-slider-caption {
     position: absolute;
     top: 20%;

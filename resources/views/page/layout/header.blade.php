@@ -9,9 +9,9 @@
 
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto">
-                        <a href="/" class="nav-item nav-link active">Trang chủ</a>
-                        <a href="{{asset('shop')}}" class="nav-item nav-link">Cửa hàng</a>
-                        <a href="{{asset('contact')}}" class="nav-item nav-link">Liên hệ</a>
+                        <a href="/" class=" nav-item nav-link {{ Request::is('/') ? 'active' : '' }}">Trang chủ</a>
+                        <a href="{{asset('shop')}}" class=" nav-item nav-link {{ Request::is('shop*') ? 'active' : '' }}">Cửa hàng</a>
+                        <a href="{{asset('contact')}}" class=" nav-item nav-link {{ Request::is('contact') ? 'active' : '' }}">Liên hệ</a>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Thương hiệu</a>
                             <div class="dropdown-menu">
@@ -22,7 +22,7 @@
                         </div> -->
                     </div>
                     <div class="navbar-nav ml-auto">
-                        <a href="{{asset('checkorder')}}" class="nav-item nav-link">Kiểm tra đơn hàng</a>
+                        <a href="{{asset('checkorder')}}" class=" nav-item nav-link {{ Request::is('checkorder*') ? 'active' : '' }}">Kiểm tra đơn hàng</a>
                     </div>
                 </div>
             </nav>

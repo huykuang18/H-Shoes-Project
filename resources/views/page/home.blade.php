@@ -1,4 +1,4 @@
-@extends('master')
+@extends('page.layout.master')
 @section('title','Trang chủ')
 @section('content')
 @if(session('alert'))

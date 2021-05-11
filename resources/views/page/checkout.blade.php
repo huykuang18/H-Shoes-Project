@@ -1,4 +1,4 @@
-@extends('master')
+@extends('page.layout.master')
 @section('title','Thanh toán')
 @section('content')
 <?php

@@ -1,4 +1,4 @@
-@extends('master')
+@extends('page.layout.master')
 @section('title','Cửa hàng')
 @section('content')
 
@@ -119,7 +119,7 @@
                 {{$products->links()}}
                 <!-- Pagination Start -->
             </div>
-            @include('category')
+            @include('page.layout.category')
         </div>
     </div>
 </div>

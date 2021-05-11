@@ -1,4 +1,4 @@
-@extends('master')
+@extends('page.layout.master')
 @section('title','Chi tiết sản phẩm')
 @section('content')
 <!-- Breadcrumb Start -->
@@ -213,7 +213,7 @@
                     </div>
                 </div>
             </div>
-            @include('category')
+            @include('page.layout.category')
         </div>
     </div>
 </div>

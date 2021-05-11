@@ -1,4 +1,4 @@
-@extends('master')
+@extends('page.layout.master')
 <link rel="stylesheet" href="{{asset('source/css/search.scss')}}">
 @section('title','Kiểm tra đơn hàng')
 @section('content')
@@ -31,7 +31,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <form method="get" action="{{url('checkorder/search')}}" class="product-search">
-                                        <input type="number" name="phone" placeholder="Nhập số điện thoại">
+                                        <input type="number" name="phone" placeholder="Nhập số điện thoại" required>
                                         <button><i class="fa fa-search"></i></button>
                                     </form>
                                 </div>

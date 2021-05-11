@@ -1,4 +1,4 @@
-@extends('master')
+@extends('page.layout.master')
 @section('title','Hướng dẫn')
 @section('content')
 <!-- Breadcrumb Start -->

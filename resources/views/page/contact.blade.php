@@ -1,4 +1,4 @@
-@extends('master')
+@extends('page.layout.master')
 @section('title','Liên hệ')
 @section('content')
 <!-- Breadcrumb Start -->
