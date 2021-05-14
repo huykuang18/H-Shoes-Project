@@ -82,20 +82,20 @@
                             <div class="product-title">
                                 <a href="{{asset('product/'.$product->id)}}">{{$product->name}}</a>
                                 @if($product->sale->sale_id!=1 && $product->sale->date_from <= $now && $product->sale->date_to >= $now)
-                                <div class="sale">
-                                    <img src="{{asset('source/img/sale1.png')}}" alt="">
-                                    <p>-{{$product->sale->discount}}%</p>
-                                </div>
-                                @else
-                                @endif
-                                <div class="ratting">
-                                    @if($product->star!=0)
-                                    @for ($i = 0; $i < 5; ++$i) <i class="fa fa-star{{ $product->star <= $i ? '-o' : ''}}{{$product->star == $i + .5 ? '-half' : ''}}" aria-hidden="true"></i>
-                                        @endfor
-                                        @else
-                                        &nbsp;
-                                        @endif
-                                </div>
+                                    <div class="sale">
+                                        <img src="{{asset('source/img/sale1.png')}}" alt="">
+                                        <p>-{{$product->sale->discount}}%</p>
+                                    </div>
+                                    @else
+                                    @endif
+                                    <div class="ratting">
+                                        @if($product->star!=0)
+                                        @for ($i = 0; $i < 5; ++$i) <i class="fa fa-star{{ $product->star <= $i ? '-o' : ''}}{{$product->star == $i + .5 ? '-half' : ''}}" aria-hidden="true"></i>
+                                            @endfor
+                                            @else
+                                            &nbsp;
+                                            @endif
+                                    </div>
                             </div>
                             <div class="product-image">
                                 <a href="{{asset('product/'.$product->id)}}">
@@ -104,11 +104,11 @@
                             </div>
                             <div class="product-price">
                                 @if($product->sale->sale_id!=1 && $product->sale->date_from <= $now && $product->sale->date_to >= $now)
-                                <h3>{{number_format($product->price*(100-$product->sale->discount)*0.01)}}<sup>đ</sup></h3>
-                                @else
-                                <h3>{{number_format($product->price)}}<sup>đ</sup></h3>
-                                @endif
-                                <a class="btn" href="{{asset('wish/add/'.$product->id)}}"><i class="fa fa-heart"></i></a>
+                                    <h3>{{number_format($product->price*(100-$product->sale->discount)*0.01)}}<sup>đ</sup></h3>
+                                    @else
+                                    <h3>{{number_format($product->price)}}<sup>đ</sup></h3>
+                                    @endif
+                                    <a class="btn" href="{{asset('wish/add/'.$product->id)}}"><i class="fa fa-heart"></i></a>
                             </div>
                         </div>
                     </div>
@@ -129,12 +129,15 @@
 <div class="brand">
     <div class="container-fluid">
         <div class="brand-slider">
-            <div class="brand-item"><img src="source/img/brands/brand-1.jpg" alt=""></div>
-            <div class="brand-item"><img src="source/img/brands/brand-2.jpg" alt=""></div>
-            <div class="brand-item"><img src="source/img/brands/brand-3.jpg" alt=""></div>
-            <div class="brand-item"><img src="source/img/brands/brand-4.jpg" alt=""></div>
-            <div class="brand-item"><img src="source/img/brands/brand-5.jpg" alt=""></div>
-            <div class="brand-item"><img src="source/img/brands/brand-3.jpg" alt=""></div>
+            @foreach($brands as $brand)
+            <a href="{{asset('shop/brand/'.$brand->id)}}" class="brand-item"><img src="{{asset('source/img/brands/'.$brand->logo)}}" alt="logo"></a>
+            @endforeach
+            @foreach($brands as $brand)
+            <a href="{{asset('shop/brand/'.$brand->id)}}" class="brand-item"><img src="{{asset('source/img/brands/'.$brand->logo)}}" alt="logo"></a>
+            @endforeach
+            <!-- <div class="brand-item"><img src="source/img/brands/brand-3.jpg" alt="logo"></div>
+            <div class="brand-item"><img src="source/img/brands/brand-4.jpg" alt="logo"></div>
+            <div class="brand-item"><img src="source/img/brands/brand-5.jpg" alt="logo"></div> -->
         </div>
     </div>
 </div>

@@ -86,10 +86,6 @@
                                             <td>
                                                 <div>
                                                     <a href="{{asset('checkorder/detail/'.$order->id)}}" class="btn"><i class="fa fa-search"></i></a>
-                                                    @if ($order->status==1)
-                                                    <a onclick="return confirm('Bạn muốn hủy đơn hàng này chứ?')" class="btn" href="{{asset('checkorder/delete/'.$order->id)}}"><i class="fa fa-trash"></i></a>
-                                                    @else
-                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

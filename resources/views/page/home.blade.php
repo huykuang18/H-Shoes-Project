@@ -21,10 +21,10 @@
                             <a class="nav-link" href="{{asset('shop/sale')}}"><i class="fa fa-bolt"></i>Đang giảm giá</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{asset('shop/catalog/1')}}"><i class="fa fa-female"></i>Giày nữ</a>
+                            <a class="nav-link" href="{{asset('shop/catalog/2')}}"><i class="fa fa-female"></i>Giày nữ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{asset('shop/catalog/2')}}"><i class="fa fa-male"></i>Giày nam</a>
+                            <a class="nav-link" href="{{asset('shop/catalog/1')}}"><i class="fa fa-male"></i>Giày nam</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{asset('shop/catalog/3')}}"><i class="fa fa-child"></i>Giày trẻ em</a>
@@ -232,12 +232,15 @@
 <div class="brand">
     <div class="container-fluid">
         <div class="brand-slider">
-            <div class="brand-item"><img src="source/img/brands/brand-1.jpg" alt=""></div>
-            <div class="brand-item"><img src="source/img/brands/brand-2.jpg" alt=""></div>
-            <div class="brand-item"><img src="source/img/brands/brand-3.jpg" alt=""></div>
-            <div class="brand-item"><img src="source/img/brands/brand-4.jpg" alt=""></div>
-            <div class="brand-item"><img src="source/img/brands/brand-5.jpg" alt=""></div>
-            <div class="brand-item"><img src="source/img/brands/brand-3.jpg" alt=""></div>
+            @foreach($brands as $brand)
+            <a href="{{asset('shop/brand/'.$brand->id)}}" class="brand-item"><img src="{{asset('source/img/brands/'.$brand->logo)}}" alt="logo"></a>
+            @endforeach
+            @foreach($brands as $brand)
+            <a href="{{asset('shop/brand/'.$brand->id)}}" class="brand-item"><img src="{{asset('source/img/brands/'.$brand->logo)}}" alt="logo"></a>
+            @endforeach
+            <!-- <div class="brand-item"><img src="source/img/brands/brand-3.jpg" alt="logo"></div>
+            <div class="brand-item"><img src="source/img/brands/brand-4.jpg" alt="logo"></div>
+            <div class="brand-item"><img src="source/img/brands/brand-5.jpg" alt="logo"></div> -->
         </div>
     </div>
 </div>
@@ -250,7 +253,7 @@
             <div class="col-md-3">
                 <div class="category-item ch-400">
                     <img src="source/img/category-3.jpg" />
-                    <a class="category-name" href="">
+                    <a class="category-name" href="#">
                         <!-- <p>Some text goes here that describes the image</p> -->
                     </a>
                 </div>
@@ -258,13 +261,13 @@
             <div class="col-md-3">
                 <div class="category-item ch-250">
                     <img src="source/img/category-7.jpg" />
-                    <a class="category-name" href="">
+                    <a class="category-name" href="#">
                         <!-- <p>Some text goes here that describes the image</p> -->
                     </a>
                 </div>
                 <div class="category-item ch-150">
                     <img src="source/img/category-6.jpg" />
-                    <a class="category-name" href="">
+                    <a class="category-name" href="#">
                         <!-- <p>Some text goes here that describes the image</p> -->
                     </a>
                 </div>
@@ -272,13 +275,13 @@
             <div class="col-md-3">
                 <div class="category-item ch-150">
                     <img src="source/img/category-5.jpg" />
-                    <a class="category-name" href="">
+                    <a class="category-name" href="#">
                         <!-- <p>Some text goes here that describes the image</p> -->
                     </a>
                 </div>
                 <div class="category-item ch-250">
                     <img src="source/img/category-4.jpg" />
-                    <a class="category-name" href="">
+                    <a class="category-name" href="#">
                         <!-- <p>Some text goes here that describes the image</p> -->
                     </a>
                 </div>
@@ -286,7 +289,7 @@
             <div class="col-md-3">
                 <div class="category-item ch-400">
                     <img src="source/img/category-8.jpg" />
-                    <a class="category-name" href="">
+                    <a class="category-name" href="#">
                         <!-- <p>Some text goes here that describes the image</p> -->
                     </a>
                 </div>
