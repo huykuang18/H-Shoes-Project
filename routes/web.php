@@ -38,6 +38,9 @@ Route::group(['namespace' => 'App\Http\Controllers',], function () {
     Route::post('rate/{id}', 'PageController@rate');
 });
 
-Route::group(['prefix' => 'admin', 'namespace' => 'App\Http\Controllers',],function(){
-    
+Route::get('admin/login', 'App\Http\Controllers\AdminController@login');
+Route::post('admin/login', 'App\Http\Controllers\AdminController@checkLogin');
+Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin', 'namespace' => 'App\Http\Controllers',],function(){
+    Route::get('/', 'AdminController@dashboard');
+    Route::get('logout', 'AdminController@logout');
 });
