@@ -62,7 +62,12 @@ $sale = 0;
                                         <td><a class="btn" href="{{url('cart/delete/'.$product->id)}}"><i class="fa fa-trash"></i></a></td>
                                     </tr>
                                     <?php
-                                    $sale = $sale + $product->price * $product->discount * 0.01 * session("cart.$product->id.number");
+                                    if($product->sale->sale_id!=1 && $product->sale->date_from <= $now && $product->sale->date_to >= $now){
+                                        $discnt = $product->sale->discount;
+                                    } else {
+                                        $discnt = 0;
+                                    }
+                                    $sale = $sale + $product->price * $discnt * 0.01 * session("cart.$product->id.number");
                                     $total = $total + $product->price * session("cart.$product->id.number");
                                     ?>
                                     @endforeach

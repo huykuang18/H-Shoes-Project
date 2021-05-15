@@ -53,8 +53,8 @@
                                     </div>
                                     <div class="price">
                                         <h4>Đơn giá:</h4>
-                                        @if($product->discount!=0)
-                                        <p>{{number_format($product->price*(100-$product->discount)*0.01)}} <span>{{$product->price}}</span></p>
+                                        @if($product->sale->sale_id!=1 && $product->sale->date_from <= $now && $product->sale->date_to >= $now)
+                                        <p>{{number_format($product->price*(100-($product->sale->discount))*0.01)}} <span>{{number_format($product->price)}}</span></p>
                                         @else
                                         <p>{{number_format($product->price)}}</p>
                                         @endif
@@ -173,10 +173,10 @@
                             <div class="product-item">
                                 <div class="product-title">
                                     <a href="{{asset('product/'.$relate->id)}}">{{$relate->name}}</a>
-                                    @if($relate->discount!=0)
+                                    @if($relate->sale->sale_id!=1 && $relate->sale->date_from <= $now && $relate->sale->date_to >= $now)
                                     <div class="sale">
                                         <img src="{{asset('source/img/sale1.png')}}" alt="">
-                                        <p>-{{$relate->discount}}%</p>
+                                        <p>-{{$relate->sale->discount}}%</p>
                                     </div>
                                     @else
                                     @endif
@@ -200,10 +200,10 @@
                                     </div> -->
                                 </div>
                                 <div class="product-price">
-                                    @if($relate->discount==0)
-                                    <h3>{{number_format($relate->price)}}<sup>đ</sup></h3>
+                                    @if($relate->sale->sale_id!=1 && $relate->sale->date_from <= $now && $relate->sale->date_to >= $now)
+                                    <h3>{{number_format($relate->price*(100-$relate->sale->discount)*0.01)}}<sup>đ</sup></h3>
                                     @else
-                                    <h3>{{number_format($relate->price*(100-$relate->discount)*0.01)}}<sup>đ</sup></h3>
+                                    <h3>{{number_format($relate->price)}}<sup>đ</sup></h3>
                                     @endif
                                     <a class="btn" href="{{asset('wish/add/'.$relate->id)}}"><i class="fa fa-heart"></i></a>
                                 </div>

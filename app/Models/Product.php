@@ -28,4 +28,9 @@ class Product extends Model
     {
         return $this->hasMany('\App\Models\Rate','product_id','id');
     }
+
+    public function sale()
+    {
+    	return $this->belongsTo('App\Models\Sale','sale_id','id');
+    }
 }

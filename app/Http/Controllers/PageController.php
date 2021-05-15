@@ -12,6 +12,8 @@ use App\Models\Procata;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\Rate;
+use App\Models\Sale;
+use Carbon\Carbon;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,14 +23,18 @@ class PageController extends Controller
 {
 	public function __construct()
 	{
-		$brands = Brand::get();
-		view()->share('brands', $brands);
+		$brands = Brand::all();
+		$now = Carbon::now('Asia/Ho_Chi_Minh');
+		view()->share('now', $now);
+		view()->share('brands',$brands);
 	}
 
 	public function getIndex()
 	{
+		$now = Carbon::now('Asia/Ho_Chi_Minh');
 		$tops = Product::orderBy('buyed', 'desc')->Limit(15)->paginate(6);
-		$sales = Product::Where('discount', '!=', 0)->orderBy('discount', 'desc')->paginate(6);
+		$sale_id = Sale::Where([['id', '!=', 1],['date_from','<=',$now->toDateString()],['date_to','>=',$now->toDateString()]])->get('id');
+		$sales = Product::WhereIn('sale_id', $sale_id)->paginate(6);
 		return view('page.home', compact('tops', 'sales'));
 	}
 
@@ -54,6 +60,7 @@ class PageController extends Controller
 
 	public function search(Request $request, $type = null, $id = null)
 	{
+		$now = Carbon::now('Asia/Ho_Chi_Minh');
 		if ($type == 'catalog') {
 			$products = Product::Where('catalog_id', $id)->paginate(6);
 			$title = Catalog::where('id',$id)->first()->name;
@@ -75,10 +82,12 @@ class PageController extends Controller
 				$title = 'Sản phẩm dưới 500 nghìn';
 			}
 		} elseif ($type == 'sale') {
-			$products = Product::Where('discount', '!=', 0)->paginate(6);
+			$sale_id = Sale::Where([['id', '!=', 1],['date_from','<=',$now->toDateString()],['date_to','>=',$now->toDateString()]])->get('id');
+			$products = Product::WhereIn('sale_id',$sale_id)->paginate(6);
 			$title = 'Đang giảm giá';
 		} elseif ($type == 'topsale') {
-			$products = Product::Where('discount', '!=', 0)->orderBy('discount', 'desc')->paginate(6);
+			$sale_id = Sale::Where([['id', '!=', 1],['date_from','<=',$now->toDateString()],['date_to','>=',$now->toDateString()]])->get('id');
+			$products = Product::WhereIn('sale_id', $sale_id)->orderBy('sale_id', 'desc')->paginate(6);
 			$title = 'Giảm giá nhiều';
 		} elseif ($type == 'top') {
 			$products = Product::orderBy('buyed', 'desc')->Limit(18)->paginate(6);
@@ -154,10 +163,10 @@ class PageController extends Controller
 			$quantity = session("cart.$product_id.number");
 			$size = session("cart.$product_id.size");
 			$product = Product::where('id', $product_id)->first();
-			if ($product->discount == 0) :
+			if ($product->sale_id == 1) :
 				$price = $product->price;
 			else :
-				$price = $product->price*(100-$product->discount)*0.01;
+				$price = $product->price*(100-$product->sale->discount)*0.01;
 			endif;
 			$pro_size = ProductDetail::where([['product_id',$product_id],['size',$size]])->first();
 			$qty = $pro_size->quantity;

@@ -60,16 +60,16 @@ $total = 0;
                             <p>
                                 <a href="{{asset('product/'.$product->id)}}">{{$product->name}}&nbsp;(x{{session("cart.$product->id.number")}})</a>
                                 <span>
-                                    @if($product->discount==0)
-                                    <span>{{number_format($product->price*session("cart.$product->id.number"))}}</span><br>
+                                    @if($product->sale->sale_id!=1 && $product->sale->date_from <= $now && $product->sale->date_to >= $now)
+                                    <span>{{number_format($product->price*(1-0.01*$product->sale->discount)*session("cart.$product->id.number"))}}</span><br>
                                     @else
-                                    <span>{{number_format($product->price*(1-0.01*$product->discount)*session("cart.$product->id.number"))}}</span><br>
+                                    <span>{{number_format($product->price*session("cart.$product->id.number"))}}</span><br>
                                     @endif
                             </p>
-                            <?php if ($product->discount == 0) {
-                                $total = $total + $product->price * session("cart.$product->id.number");
+                            <?php if ($product->sale->sale_id!=1 && $product->sale->date_from <= $now && $product->sale->date_to >= $now) {
+                                $total = $total + ($product->price * (100 - $product->sale->discount) / 100) * session("cart.$product->id.number");
                             } else {
-                                $total = $total + ($product->price * (100 - $product->discount) / 100) * session("cart.$product->id.number");
+                                $total = $total + $product->price * session("cart.$product->id.number");
                             }
                             ?>
                             @endforeach

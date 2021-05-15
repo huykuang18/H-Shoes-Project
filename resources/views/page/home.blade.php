@@ -116,10 +116,10 @@
             <div class="col-lg-3">
                 <div class="product-item">
                     <div class="product-title">
-                        @if($top->discount!=0)
+                        @if($top->sale->sale_id!=1 && $top->sale->date_from <= $now && $top->sale->date_to >= $now)
                         <div class="sale">
                             <img src="{{asset('source/img/sale1.png')}}" alt="">
-                            <p>-{{$top->discount}}%</p>
+                            <p>-{{$top->sale->discount}}%</p>
                         </div>
                         @else
                         @endif
@@ -145,10 +145,10 @@
                     </div>
                     <div class="product-price">
                         <div class="product-price">
-                            @if($top->discount==0)
-                            <h3>{{number_format($top->price)}}<sup>đ</sup></h3>
+                            @if($top->sale->sale_id!=1 && $top->sale->date_from <= $now && $top->sale->date_to >= $now)
+                            <h3>{{number_format($top->price*(100-$top->sale->discount)*0.01)}}<sup>đ</sup></h3>
                             @else
-                            <h3>{{number_format($top->price*(100-$top->discount)*0.01)}}<sup>đ</sup></h3>
+                            <h3>{{number_format($top->price)}}<sup>đ</sup></h3>
                             @endif
                             <a class="btn" href="{{asset('wish/add/'.$top->id)}}"><i class="fa fa-heart"></i></a>
                         </div>
@@ -191,10 +191,10 @@
                 <div class="product-item">
                     <div class="product-title">
                         <a href="{{asset('product/'.$sale->id)}}">{{$sale->name}}</a>
-                        @if($sale->discount!=0)
+                        @if($sale->sale_id!=1)
                         <div class="sale">
                             <img src="{{asset('source/img/sale1.png')}}" alt="">
-                            <p>-{{$sale->discount}}%</p>
+                            <p>-{{$sale->sale->discount}}%</p>
                         </div>
                         @else
                         @endif
@@ -213,10 +213,10 @@
                         </a>
                     </div>
                     <div class="product-price">
-                        @if($sale->discount==0)
+                        @if($sale->sale_id==1)
                         <h3>{{number_format($sale->price)}}<sup>đ</sup></h3>
                         @else
-                        <h3>{{number_format($sale->price*(100-$sale->discount)*0.01)}}<sup>đ</sup></h3>
+                        <h3>{{number_format($sale->price*(100-$sale->sale->discount)*0.01)}}<sup>đ</sup></h3>
                         @endif
                         <a class="btn" href="{{asset('wish/add/'.$sale->id)}}"><i class="fa fa-heart"></i></a>
                     </div>

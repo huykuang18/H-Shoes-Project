@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Catalog;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
 	public function __construct()
 	{
-		$brands = Brand::get();
-		view()->share('brands', $brands);
+		$brands = Brand::all();
+		$now = Carbon::now('Asia/Ho_Chi_Minh');
+		view()->share('now', $now);
+		view()->share('brands',$brands);
 	}
 	/* -- Cart --*/
 	public function cart(Request $request, $action = null, $id = null)
