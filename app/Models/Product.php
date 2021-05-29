@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $table = 'product';
+    protected $guarded = [];  
 
     public function catalog()
     {
@@ -33,4 +34,9 @@ class Product extends Model
     {
     	return $this->belongsTo('App\Models\Sale','sale_id','id');
     }
+
+    public function productDetail()
+    {
+    	return $this->belongsTo('App\Models\ProductDetail','product_id','id');
+    } 
 }

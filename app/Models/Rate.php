@@ -10,6 +10,7 @@ class Rate extends Model
     use HasFactory;
 
     protected $table = 'rate';
+    protected $guarded = [];  
 
     public function product()
     {

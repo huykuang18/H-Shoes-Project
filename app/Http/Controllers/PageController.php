@@ -116,8 +116,8 @@ class PageController extends Controller
 		$catalog = Product::Where('id', $id)->get('catalog_id');
 		$brand = Product::Where('id', $id)->get('brand_id');
 		$products = Product::WhereIn('catalog_id', $catalog)->orWhereIn('catalog_id', $catalog)->get();
-		$contents = explode(";",$product->content);
-		$rates = Rate::Where('product_id',$id)->get();
+		$contents = explode("\n",$product->content);
+		$rates = Rate::Where([['product_id',$id],['status',1]])->get();
 		return view('page.product-detail', compact('product', 'image_list', 'sizes', 'products','contents','rates'));
 	}
 
@@ -146,6 +146,7 @@ class PageController extends Controller
 			$customer = Customer::where('phone',$mobile)->first();
 		}
 		$customer_id = $customer->id;
+		$purchased = $customer->purchased;
 		$address = $request->address;
 		$payment_id = $request->payment;
 		$total = $request->total;
@@ -157,6 +158,7 @@ class PageController extends Controller
 			'total' => $total,
 			'note' => $note
 		]);
+		Customer::Where('id',$customer_id)->update(['purchased' => $purchased + 1]);
 		$order = Order::orderBy('id', 'desc')->first();
 		$order_id = $order->id;
 		foreach (array_keys(session('cart')) as $product_id) :
