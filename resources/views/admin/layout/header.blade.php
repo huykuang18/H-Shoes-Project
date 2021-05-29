@@ -10,6 +10,7 @@
                 <i class="fas fa-user fa-fw"></i>{{session('admin')}}
             </a>
             <div class="dropdown-menu dropdown-menu-bottom" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="{{asset('admin/account/change')}}">Đổi mật khẩu</a>
                 <a class="dropdown-item" href="{{asset('admin/logout')}}">Thoát</a>
             </div>
         </li>

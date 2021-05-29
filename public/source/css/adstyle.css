@@ -15,6 +15,7 @@
  */
 
 :root {
+    --blue: #;
     --blue: #007bff;
     --indigo: #6610f2;
     --purple: #6f42c1;
@@ -84,6 +85,16 @@ body {
 
 [tabindex="-1"]:focus:not(:focus-visible) {
     outline: 0 !important;
+}
+
+table tr td img {
+    max-width: 60px;
+    max-height: 60px;
+}
+
+.form-group img {
+    max-width: 100px;
+    max-height: 100px;
 }
 
 hr {
@@ -1933,6 +1944,10 @@ pre code {
     border: 0;
 }
 
+form {
+    margin: 5%;
+}
+
 .form-control {
     display: block;
     width: 100%;
@@ -1947,6 +1962,10 @@ pre code {
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control label {
+    font-weight: bold;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2018,7 +2037,7 @@ select.form-control:focus::-ms-value {
     padding-top: calc(0.375rem + 1px);
     padding-bottom: calc(0.375rem + 1px);
     margin-bottom: 0;
-    font-size: inherit;
+    font-size: var(--breakpoint-lg);
     line-height: 1.5;
 }
 
@@ -2082,6 +2101,11 @@ textarea.form-control {
 
 .form-group {
     margin-bottom: 1rem;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #FF6F61;
 }
 
 .form-text {
@@ -3075,6 +3099,30 @@ fieldset:disabled a.btn {
     color: #fff;
     background-color: #343a40;
     border-color: #343a40;
+}
+
+.btn-redlight {
+    color: #fff;
+    background-color: #FF6F61;
+    border-color: #FF6F61;
+}
+
+.btn-redlight:hover {
+    color: #FF6F61;
+    background-color: #343a40;
+    border-color: #343a40;
+}
+
+.btn-outline-redlight {
+    color: #FF6F61;
+    background-color: #fff;
+    border-color: #FF6F61;
+}
+
+.btn-outline-redlight:hover {
+    color: #fff;
+    background-color: #FF6F61;
+    border-color: #FF6F61;
 }
 
 .btn-outline-dark:focus,
@@ -4829,6 +4877,10 @@ input[type=button].btn-block {
 
 .card-header h3 {
     color: #eafaf3;
+}
+
+.card-header a {
+    float: right;
 }
 
 .card-header:first-child {
@@ -10435,4 +10487,8 @@ body {
 
 .sb-sidenav-light .sb-sidenav-footer {
     background-color: #e9ecef;
+}
+
+#frmAdd {
+    display: none;
 }

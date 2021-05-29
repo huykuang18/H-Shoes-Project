@@ -20,3 +20,19 @@
         $("body").toggleClass("sb-sidenav-toggled");
     });
 })(jQuery);
+
+function hidenShow() {
+    if (document.getElementById("formAdd").style.display == 'none') {
+        $("#formAdd").show();
+    } else {
+        $("#formAdd").hide();
+    }
+}
+
+function hiden() {
+    if (document.getElementById("formAddPayment").style.display == 'none') {
+        $("#formAddPayment").show();
+    } else {
+        $("#formAddPayment").hide();
+    }
+}
