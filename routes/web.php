@@ -107,6 +107,4 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin', 'namespace' => 
     Route::post('order/update/{id}', 'AdminController@putOrder');
     Route::get('order/delete/{id}', 'AdminController@delOrder');
 
-    /**Customer */
-    Route::get('customer','AdminController@getCustomer');
 });

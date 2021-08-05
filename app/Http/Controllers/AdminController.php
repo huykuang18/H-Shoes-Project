@@ -15,12 +15,21 @@ use App\Models\ProductDetail;
 use App\Models\Rate;
 use App\Models\Sale;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard');
+        $customers = Customer::all();
+        $range = Carbon::now()->subMonths(5);
+        $orderMonth = DB::table('order')
+            ->select(DB::raw('month(created_at) as getMonth'), DB::raw('COUNT(*) as value'))
+            ->where('created_at', '>=', $range)
+            ->groupBy('getMonth')
+            ->orderBy('getMonth', 'ASC')
+            ->get()->toJson();
+        return view('admin.dashboard', compact('customers', 'orderMonth'));
     }
 
     /**Register */
@@ -37,13 +46,13 @@ class AdminController extends Controller
         $username = $request->username;
         $password = $request->password;
         $repassword = $request->repassword;
-        $checkacc = Admin::Where('username',$username)->count();
-        if($checkacc != 0){
+        $checkacc = Admin::Where('username', $username)->count();
+        if ($checkacc != 0) {
             $alert = 'Tài khoản đã tồn tại, vui lòng nhập lại';
-            return redirect()->back()->with('alert',$alert);
-        } elseif($password != $repassword) {
+            return redirect()->back()->with('alert', $alert);
+        } elseif ($password != $repassword) {
             $alert = 'Mật khẩu không khớp, vui lòng nhập lại';
-            return redirect()->back()->with('alert',$alert);
+            return redirect()->back()->with('alert', $alert);
         } else {
             Admin::create([
                 'fullname' => $fullname,
@@ -51,7 +60,7 @@ class AdminController extends Controller
                 'username' => $username,
                 'password' => md5($password)
             ]);
-            return redirect('/admin/login')->with('alertsuccess','success');
+            return redirect('/admin/login')->with('alertsuccess', 'success');
         }
     }
 
@@ -70,7 +79,7 @@ class AdminController extends Controller
         $admin = Admin::where([['username', $username], ['password', $password]])->first();
         if ($admin == null) {
             return redirect()->back()->with('alert', 'Sai tên đăng nhập hoặc mật khẩu');
-        } elseif($admin->active == 0) {
+        } elseif ($admin->active == 0) {
             return redirect()->back()->with('alert', 'Tài khoản chưa được duyệt!');
         } else {
             session(['admin' => $username]);
@@ -90,47 +99,47 @@ class AdminController extends Controller
     public function getAcc()
     {
         $accounts = Admin::all();
-        return view('admin.account.account',compact('accounts'));
+        return view('admin.account.account', compact('accounts'));
     }
 
     public function putAcc(Request $request, $id = null)
     {
         $role = $request->roleSelection;
         $active = $request->activeSelection;
-        Admin::Where('id',$id)->update([
+        Admin::Where('id', $id)->update([
             'role' => $role,
             'active' => $active
         ]);
-        return redirect()->back()->with('alert','Thay đổi thành công!');
+        return redirect()->back()->with('alert', 'Thay đổi thành công!');
     }
 
     public function delAcc($id = null)
     {
-        Admin::Where('id',$id)->delete();
-        return redirect()->back()->with('alert','Đã xóa tài khoản!');
+        Admin::Where('id', $id)->delete();
+        return redirect()->back()->with('alert', 'Đã xóa tài khoản!');
     }
 
     public function getFormChange()
     {
-        $account = Admin::Where('username',session('admin'))->first();
-        return view('admin.account.change-password',compact('account'));
+        $account = Admin::Where('username', session('admin'))->first();
+        return view('admin.account.change-password', compact('account'));
     }
 
     public function changePass(Request $request)
     {
-        $account = Admin::Where('username',session('admin'))->first();
+        $account = Admin::Where('username', session('admin'))->first();
         $password = $request->password;
         $newpass = $request->newpass;
         $repassword = $request->repassword;
-        if($account->password != md5($password)){
-            return redirect()->back()->with('alert','Mật khẩu cũ không đúng!');
-        } elseif($newpass != $repassword) {
-            return redirect()->back()->with('alert','Mật khẩu mới không khớp!');
+        if ($account->password != md5($password)) {
+            return redirect()->back()->with('alert', 'Mật khẩu cũ không đúng!');
+        } elseif ($newpass != $repassword) {
+            return redirect()->back()->with('alert', 'Mật khẩu mới không khớp!');
         } else {
             $account->update([
                 'password' => md5($newpass)
             ]);
-            return redirect('/admin')->with('alert','Đổi mật khẩu thành công');
+            return redirect('/admin')->with('alert', 'Đổi mật khẩu thành công');
         }
     }
 
@@ -543,24 +552,28 @@ class AdminController extends Controller
     public function getOrder()
     {
         $orders = Order::all();
-        return view('admin.order.order',compact('orders'));
+        return view('admin.order.order', compact('orders'));
+    }
+
+    public function putOrder(Request $request, $id = null)
+    {
+        $status = $request->statusSelection;
+        Order::Where('id', $id)->update(['status' => $status]);
+        return redirect()->back()->with('alert', 'Cập nhật thành công!');
     }
 
     public function getDetail($id = null)
     {
-        $order = Order::Where('id',$id)->first();
-        $details = OrderDetail::Where('order_id',$id)->get();
-        return view('admin.order.detail',compact('order','details'));
+        $order = Order::Where('id', $id)->first();
+        $details = OrderDetail::Where('order_id', $id)->get();
+        return view('admin.order.detail', compact('order', 'details'));
+    }
+
+    public function delOrder($id = null)
+    {
+        OrderDetail::Where('order_id', $id)->delete();
+        Order::Where('id', $id)->delete();
+        return redirect()->back()->with('alert', 'Xóa bỏ đơn hàng thành công!');
     }
     /**End Order */
-
-    /**Customer */
-
-    public function getCustomer()
-    {
-        $customers = Customer::all();
-        return view('admin.customer.customer',compact('customers'));
-    }
-
-    /**End Customer */
 }

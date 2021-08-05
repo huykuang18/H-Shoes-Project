@@ -66,10 +66,6 @@
                                 <th>Kích cỡ</th>
                                 <th>Số lượng</th>
                                 <th>Thành tiền</th>
-                                @if ($order->status==4)
-                                <th>Đánh giá</th>
-                                @else
-                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -84,10 +80,6 @@
                                 <td>{{$odt->size}}</td>
                                 <td>{{$odt->quantity}}</td>
                                 <td>{{number_format($odt->quantity*$odt->price)}}</td>
-                                @if ($order->status==4)
-                                <td><a href="#" class="btn"><i class="fa fa-star"></i></a></td>
-                                @else
-                                @endif
                             </tr>
                             @endforeach
                             <tr>

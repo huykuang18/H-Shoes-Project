@@ -51,14 +51,10 @@ $account = Admin::Where('username',session('admin'))->first();
                     <div class="sb-nav-link-icon"><i class="fa fa-credit-card"></i></div>
                     Phương thức thanh toán
                 </a>
-                <a class="nav-link" href="{{asset('/admin/customer')}}">
-                    <div class="sb-nav-link-icon"><i class="fa fa-address-card"></i></div>
-                    Danh sách khách hàng
-                </a>
             </div>
         </div>
         <div class="sb-sidenav-footer">
-            <div class="small">Logged in as:</div>
+            <div class="small">Đăng nhập bởi:</div>
             {{session('admin')}}
         </div>
     </nav>
