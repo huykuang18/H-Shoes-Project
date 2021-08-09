@@ -22,14 +22,14 @@ class AdminController extends Controller
     public function dashboard()
     {
         $customers = Customer::all();
-        $range = Carbon::now()->subMonths(5);
-        $orderMonth = DB::table('order')
-            ->select(DB::raw('month(created_at) as getMonth'), DB::raw('COUNT(*) as value'))
-            ->where('created_at', '>=', $range)
-            ->groupBy('getMonth')
-            ->orderBy('getMonth', 'ASC')
-            ->get()->toJson();
-        return view('admin.dashboard', compact('customers', 'orderMonth'));
+        $months = Order::join('orderdetail','order.id','=','orderdetail.order_id')
+            ->select(DB::raw('month(order.created_at) as month'),DB::raw('sum(orderdetail.quantity) as quantity'),DB::raw('sum(orderdetail.price*orderdetail.quantity) as total'))
+            ->groupBy('month')->orderBy('total', 'desc')->get();
+        $brands = OrderDetail::join('product','orderdetail.product_id','=','product.id')
+            ->join('brand','product.brand_id','=','brand.id')
+            ->select('brand.logo as logo','brand.name as name',DB::raw('sum(orderdetail.quantity) as quantity'),DB::raw('sum(orderdetail.price*orderdetail.quantity) as total'))
+            ->groupBy('name','logo')->orderBy('total', 'desc')->get();
+        return view('admin.dashboard', compact('customers', 'months', 'brands'));
     }
 
     /**Register */

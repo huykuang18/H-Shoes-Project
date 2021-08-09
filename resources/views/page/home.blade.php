@@ -166,7 +166,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <h1>Đăng ký nhận thông báo mới</h1>
+                <h1>Gửi phản hồi</h1>
             </div>
             <div class="col-md-6">
                 <div class="form">

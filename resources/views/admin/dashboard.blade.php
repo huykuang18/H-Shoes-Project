@@ -14,18 +14,74 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-chart-area mr-1"></i>
-                    Thống kê bán hàng trong 7 ngày gần đây
+                    Thống kê bán theo nhãn hàng
                 </div>
-                <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" max-height="50%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Nhãn hiệu</th>
+                                    <th>Số lượng bán</th>
+                                    <th>Số tiền thu về</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Nhãn hiệu</th>
+                                    <th>Số lượng bán</th>
+                                    <th>Số tiền thu về</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @foreach($brands as $brand)
+                                <tr>
+                                    <td><img src="{{asset('source/img/brands/'.$brand->logo)}}" alt="image product">&nbsp;{{$brand->name}}</td>
+                                    <td>{{$brand->quantity}}</td>
+                                    <td>{{number_format($brand->total)}}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-xl-6">
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-chart-bar mr-1"></i>
-                    Thống kê bán hàng 6 tháng gần đây
+                    Thống kê bán hàng theo tháng
                 </div>
-                <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" max-height="50%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Tháng</th>
+                                    <th>Số lượng bán</th>
+                                    <th>Số tiền thu về</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Tháng</th>
+                                    <th>Số lượng bán</th>
+                                    <th>Số tiền thu về</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @foreach($months as $month)
+                                <tr>
+                                    <td>Tháng {{$month->month}}</td>
+                                    <td>{{$month->quantity}}</td>
+                                    <td>{{number_format($month->total)}}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
